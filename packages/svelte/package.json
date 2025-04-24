@@ -77,11 +77,11 @@
   "homepage": "https://sdk.khulnasoft.com/docs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/khulnasoft/ai.git",
+    "url": "git+https://github.com/khulnasoft/ai-toolkit.git",
     "directory": "packages/svelte"
   },
   "bugs": {
-    "url": "https://github.com/khulnasoft/ai/issues"
+    "url": "https://github.com/khulnasoft/ai-toolkit/issues"
   },
   "keywords": [
     "ai",

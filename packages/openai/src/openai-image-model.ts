@@ -1,19 +1,17 @@
-import type {
-  ImageModelV1,
-  ImageModelV1CallWarning,
-} from '@ai-toolkit/provider';
+import { ImageModelV1, ImageModelV1CallWarning } from '@ai-toolkit/provider';
 import {
   combineHeaders,
   createJsonResponseHandler,
   postJsonToApi,
 } from '@ai-toolkit/provider-utils';
 import { z } from 'zod';
-import type { OpenAIConfig } from './openai-config';
+import { OpenAIConfig } from './openai-config';
 import { openaiFailedResponseHandler } from './openai-error';
 import {
-  type OpenAIImageModelId,
-  type OpenAIImageSettings,
+  OpenAIImageModelId,
+  OpenAIImageSettings,
   modelMaxImagesPerCall,
+  hasDefaultResponseFormat,
 } from './openai-image-settings';
 
 interface OpenAIImageModelConfig extends OpenAIConfig {
@@ -81,7 +79,9 @@ export class OpenAIImageModel implements ImageModelV1 {
         n,
         size,
         ...(providerOptions.openai ?? {}),
-        response_format: 'b64_json',
+        ...(!hasDefaultResponseFormat.has(this.modelId)
+          ? { response_format: 'b64_json' }
+          : {}),
       },
       failedResponseHandler: openaiFailedResponseHandler,
       successfulResponseHandler: createJsonResponseHandler(
